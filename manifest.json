@@ -1,0 +1,17 @@
+{
+  "name": "Tune Into Origin — Foundation",
+  "short_name": "Foundation",
+  "description": "Ground the body, feel the truth, lead with love. Exchange the lie an emotion is telling you for what God says, and return to your foundation.",
+  "start_url": "./tune-into-origin-foundation.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#FFFFFF",
+  "theme_color": "#FBF8EF",
+  "icons": [
+    { "src": "icons/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "icons/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "maskable" },
+    { "src": "icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}
