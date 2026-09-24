@@ -1,0 +1,742 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>Tune Into Origin — Foundation</title>
+<link rel="manifest" href="manifest.json">
+<link rel="icon" type="image/png" sizes="32x32" href="icons/icon-32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="icons/icon-16.png">
+<link rel="apple-touch-icon" href="icons/icon-180.png">
+<meta name="theme-color" content="#FBF8EF">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="Tune Into Origin">
+<meta name="mobile-web-app-capable" content="yes">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,500&family=Crimson+Pro:ital,wght@0,400;0,500;0,600;1,400&family=Work+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#FFFFFF;
+    --panel:#FBF8EF;
+    --panel-2:#F5EFDC;
+    --line:rgba(58,54,32,0.09);
+    --ink:#3A3722;
+    --ink-dim:#8C846A;
+    --ink-faint:#B6AD90;
+
+    --root:#46512F;      /* Ground the Body */
+    --root-soft:#EEF0E4;
+    --sacral:#C79A3B;    /* Feel the Truth */
+    --sacral-soft:#FBF1DA;
+    --heart:#7C3040;     /* Lead with Love */
+    --heart-soft:#F7E9EA;
+
+    --gold-glow:#F4E3B0;
+    --lie:#B3543E;
+    --lie-soft:#FBEDE7;
+    --truth:#B8902F;
+    --truth-soft:#FDF6E4;
+  }
+
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:
+      radial-gradient(ellipse 1000px 460px at 50% 0%, var(--gold-glow) 0%, rgba(244,227,176,0) 65%),
+      var(--bg);
+    color:var(--ink);
+    font-family:'Crimson Pro', serif;
+    -webkit-font-smoothing:antialiased;
+    padding-bottom:80px;
+  }
+  .wrap{max-width:740px;margin:0 auto;padding:0 20px;}
+
+  /* ---------- Brand mark ---------- */
+  .brandmark{
+    text-align:center;
+    padding:36px 0 4px;
+  }
+  .brandmark img{
+    width:100%;
+    max-width:340px;
+    height:auto;
+    display:block;
+    margin:0 auto;
+  }
+
+  header{padding:8px 0 30px;border-bottom:1px solid var(--line);}
+  .eyebrow{
+    font-family:'Work Sans',sans-serif;font-size:11.5px;letter-spacing:0.16em;
+    text-transform:uppercase;color:var(--sacral);margin-bottom:12px;text-align:center;
+  }
+  h1{
+    font-family:'Cormorant Garamond',serif;font-weight:600;font-size:36px;line-height:1.1;
+    margin:0 0 18px;text-align:center;letter-spacing:0.01em;color:var(--root);
+  }
+  h1 em{font-style:italic;font-weight:500;color:var(--sacral);}
+  .thesis{font-size:17.5px;line-height:1.68;color:var(--ink-dim);margin:0 0 14px;}
+  .thesis strong{color:var(--ink);font-weight:600;}
+  .verse-block{
+    margin-top:22px;padding:16px 18px;background:var(--panel);
+    border-left:3px solid var(--sacral);border-radius:2px;
+  }
+  .verse-block p{
+    font-family:'Cormorant Garamond',serif;font-style:italic;font-size:17px;
+    color:var(--ink-dim);margin:0;line-height:1.5;
+  }
+  .verse-ref{
+    font-family:'Work Sans',sans-serif;font-size:11px;letter-spacing:0.08em;
+    text-transform:uppercase;color:var(--sacral);margin-top:8px;display:block;
+  }
+
+  /* ---------- Check-in banner ---------- */
+  .checkin-banner{
+    margin-top:26px;background:var(--panel);border:1px solid var(--line);
+    border-radius:14px;padding:18px 20px;
+  }
+  .checkin-banner .cb-label{
+    font-family:'Work Sans',sans-serif;font-size:10.5px;letter-spacing:0.12em;
+    text-transform:uppercase;color:var(--ink-faint);margin-bottom:6px;
+  }
+  .checkin-banner .cb-main{font-family:'Cormorant Garamond',serif;font-size:20px;color:var(--ink);}
+  .checkin-banner .cb-main strong{color:var(--heart);}
+  .checkin-banner .cb-sub{font-size:14.5px;color:var(--ink-dim);margin-top:6px;}
+
+  /* ---------- Search ---------- */
+  .searchbar{
+    position:sticky;top:0;z-index:20;
+    background:rgba(255,255,255,0.94);
+    backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
+    padding:16px 0;border-bottom:1px solid var(--line);margin-top:30px;
+  }
+  .search-input-row{
+    display:flex;align-items:center;gap:10px;background:var(--panel);
+    border:1px solid var(--line);border-radius:12px;padding:12px 14px;
+  }
+  .search-input-row svg{flex:none;opacity:0.4;}
+  #search{flex:1;background:none;border:none;outline:none;color:var(--ink);
+    font-family:'Crimson Pro',serif;font-size:17px;}
+  #search::placeholder{color:var(--ink-faint);}
+  .filters{display:flex;gap:8px;margin-top:10px;overflow-x:auto;scrollbar-width:none;}
+  .filters::-webkit-scrollbar{display:none;}
+  .filter-pill{
+    font-family:'Work Sans',sans-serif;font-size:12.5px;white-space:nowrap;padding:8px 14px;
+    border-radius:100px;border:1px solid var(--line);background:transparent;
+    color:var(--ink-dim);cursor:pointer;
+  }
+  .filter-pill.active{color:#fff;border-color:transparent;}
+  .filter-pill[data-el="all"].active{background:var(--ink);}
+  .filter-pill[data-el="root"].active{background:var(--root);}
+  .filter-pill[data-el="sacral"].active{background:var(--sacral);}
+  .filter-pill[data-el="heart"].active{background:var(--heart);}
+
+  .result-count{font-family:'Work Sans',sans-serif;font-size:12px;color:var(--ink-faint);margin:18px 0 8px;}
+
+  /* ---------- Sections ---------- */
+  .section{margin-top:44px;}
+  .section-head{display:flex;align-items:baseline;gap:10px;margin-bottom:4px;}
+  .section-head h2{
+    font-family:'Cormorant Garamond',serif;font-weight:600;font-size:25px;margin:0;letter-spacing:0.02em;
+  }
+  .section-tag{
+    font-family:'Work Sans',sans-serif;font-size:10.5px;letter-spacing:0.1em;
+    text-transform:uppercase;padding:3px 9px;border-radius:100px;
+  }
+  .section-sub{font-size:15.5px;color:var(--ink-dim);margin:0 0 20px 0;max-width:56ch;line-height:1.5;}
+  .section.root h2{color:var(--root);}
+  .section.root .section-tag{background:var(--root-soft);color:var(--root);}
+  .section.sacral h2{color:var(--sacral);}
+  .section.sacral .section-tag{background:var(--sacral-soft);color:var(--sacral);}
+  .section.heart h2{color:var(--heart);}
+  .section.heart .section-tag{background:var(--heart-soft);color:var(--heart);}
+
+  /* ---------- Cards ---------- */
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:14px;
+    margin-bottom:10px;overflow:hidden;}
+  .card-head{display:flex;align-items:center;gap:14px;padding:16px 18px;cursor:pointer;user-select:none;}
+  .card-dot{width:10px;height:10px;border-radius:50%;flex:none;}
+  .card.root .card-dot{background:var(--root);}
+  .card.sacral .card-dot{background:var(--sacral);}
+  .card.heart .card-dot{background:var(--heart);}
+  .card-title-wrap{flex:1;min-width:0;}
+  .card-name{font-family:'Cormorant Garamond',serif;font-weight:600;font-size:19px;margin:0;}
+  .card-one{font-family:'Work Sans',sans-serif;font-size:12.5px;color:var(--ink-dim);margin-top:2px;}
+  .chev{flex:none;color:var(--ink-faint);transition:transform 0.2s ease;}
+  .card.open .chev{transform:rotate(180deg);}
+  .card-body{max-height:0;overflow:hidden;transition:max-height 0.3s ease;}
+  .card.open .card-body{max-height:1500px;}
+  .card-body-inner{padding:16px 18px 20px;border-top:1px solid var(--line);}
+
+  .field{margin-bottom:16px;}
+  .field-label{
+    font-family:'Work Sans',sans-serif;font-size:10.5px;letter-spacing:0.12em;
+    text-transform:uppercase;color:var(--ink-faint);margin-bottom:4px;
+  }
+  .field-text{font-size:16px;line-height:1.55;color:var(--ink);}
+
+  .swap{
+    border:1px solid var(--line);border-radius:12px;overflow:hidden;margin-bottom:16px;
+  }
+  .swap-lie{background:var(--lie-soft);padding:13px 15px;}
+  .swap-lie .field-label{color:var(--lie);}
+  .swap-lie .field-text{font-style:italic;color:#7A3826;}
+  .swap-arrow{
+    display:flex;align-items:center;justify-content:center;gap:8px;
+    padding:6px 0;background:var(--panel);
+    font-family:'Work Sans',sans-serif;font-size:10px;letter-spacing:0.14em;
+    text-transform:uppercase;color:var(--ink-faint);
+  }
+  .swap-truth{background:var(--truth-soft);padding:13px 15px;}
+  .swap-truth .field-label{color:var(--truth);display:flex;align-items:center;gap:6px;}
+  .swap-truth .field-text{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:16.5px;color:#5C4416;}
+  .canon-tag{
+    font-family:'Work Sans',sans-serif;font-style:normal;font-size:9px;letter-spacing:0.06em;
+    text-transform:uppercase;color:var(--truth);background:rgba(184,144,47,0.15);
+    padding:2px 7px;border-radius:100px;
+  }
+
+  .field.foundation{
+    background:var(--root-soft);border-radius:10px;padding:12px 14px;
+  }
+  .field.foundation .field-label{color:var(--root);}
+
+  .card-actions{display:flex;align-items:center;gap:8px;margin-top:16px;flex-wrap:wrap;}
+  .mark-btn{
+    font-family:'Work Sans',sans-serif;font-size:12.5px;background:var(--ink);color:#fff;
+    border:none;padding:9px 15px;border-radius:100px;cursor:pointer;
+  }
+  .mark-btn.marked{background:var(--heart);}
+  .note-input{
+    flex:1;min-width:140px;font-family:'Crimson Pro',serif;font-size:14.5px;
+    background:#fff;border:1px solid var(--line);border-radius:100px;padding:8px 14px;color:var(--ink);
+  }
+  .note-input:focus{outline:none;border-color:var(--sacral);}
+
+  mark{background:rgba(199,154,59,0.28);color:var(--ink);border-radius:3px;padding:0 2px;}
+
+  .empty{text-align:center;padding:60px 20px;color:var(--ink-faint);
+    font-family:'Cormorant Garamond',serif;font-style:italic;font-size:18px;}
+
+  /* ---------- Journal ---------- */
+  .journal{margin-top:56px;padding-top:32px;border-top:1px solid var(--line);}
+  .journal-head{display:flex;align-items:center;justify-content:space-between;cursor:pointer;user-select:none;}
+  .journal-head h2{font-family:'Cormorant Garamond',serif;font-weight:600;font-size:24px;margin:0;color:var(--root);}
+  .journal-count{font-family:'Work Sans',sans-serif;font-size:12px;color:var(--ink-faint);}
+  .journal-body{max-height:0;overflow:hidden;transition:max-height 0.3s ease;}
+  .journal.open .journal-body{max-height:3000px;}
+  .journal-body-inner{padding-top:18px;}
+  .journal-empty{font-family:'Cormorant Garamond',serif;font-style:italic;color:var(--ink-faint);
+    font-size:16px;padding:10px 0;}
+  .journal-entry{
+    display:flex;align-items:flex-start;gap:12px;padding:12px 14px;background:var(--panel);
+    border:1px solid var(--line);border-radius:10px;margin-bottom:8px;
+  }
+  .je-dot{width:10px;height:10px;border-radius:50%;margin-top:5px;flex:none;}
+  .je-dot.root{background:var(--root);}
+  .je-dot.sacral{background:var(--sacral);}
+  .je-dot.heart{background:var(--heart);}
+  .je-body{flex:1;min-width:0;}
+  .je-name{font-family:'Cormorant Garamond',serif;font-weight:600;font-size:17px;}
+  .je-note{font-size:14.5px;color:var(--ink-dim);margin-top:2px;}
+  .je-date{font-family:'Work Sans',sans-serif;font-size:11px;color:var(--ink-faint);margin-top:4px;}
+  .je-delete{background:none;border:none;color:var(--ink-faint);font-size:18px;cursor:pointer;
+    line-height:1;padding:2px 4px;flex:none;}
+  .journal-clear{margin-top:14px;font-family:'Work Sans',sans-serif;font-size:12px;
+    color:var(--heart);background:none;border:none;cursor:pointer;text-decoration:underline;}
+
+  footer{max-width:740px;margin:60px auto 0;padding:32px 20px 0;
+    border-top:1px solid var(--line);text-align:center;}
+  footer p{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:16px;
+    color:var(--ink-faint);line-height:1.6;max-width:52ch;margin:0 auto;}
+  .footer-tagline{margin-top:18px;font-family:'Work Sans',sans-serif;font-size:11px;
+    letter-spacing:0.1em;text-transform:uppercase;}
+  .footer-tagline span:nth-child(1){color:var(--root);}
+  .footer-tagline span:nth-child(2){color:var(--sacral);}
+  .footer-tagline span:nth-child(3){color:var(--heart);}
+  .footer-note{margin-top:20px;font-family:'Work Sans',sans-serif;font-style:normal;
+    font-size:11.5px;color:var(--ink-faint);line-height:1.6;max-width:56ch;}
+
+  @media (max-width:480px){
+    h1{font-size:29px;}
+    .thesis{font-size:16px;}
+    .brandmark img{max-width:260px;}
+  }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+
+  <div class="brandmark">
+    <img src="assets/tio-logo-full.png" alt="Tune Into Origin — Ground the Body, Feel the Truth, Lead with Love">
+  </div>
+
+  <header>
+    <div class="eyebrow">Foundation Companion</div>
+    <h1>Return to <em>Foundation</em></h1>
+    <p class="thesis">
+      Your foundation is who you already are underneath the fear, the striving, and the old wounds —
+      the truth God placed in you before anything ever tried to convince you otherwise. Every emotion
+      that moves through you is <strong>information</strong>, not identity. It's never meant to be
+      believed as fact. It's meant to be brought into the light and exchanged for truth.
+    </p>
+    <p class="thesis">
+      When an emotion starts running your life — when you're spiraling, can't let it go, can't move
+      forward — the goal isn't to suppress it or become it. It's to notice the <strong>lie</strong> it's
+      telling you in that moment, and exchange that lie for what God actually says. This is healing
+      through Christ consciousness: grounded in the body, renewed in the mind.
+    </p>
+    <div class="verse-block">
+      <p>"Be not conformed to this world: but be ye transformed by the renewing of your mind."</p>
+      <span class="verse-ref">Romans 12:2</span>
+    </div>
+  </header>
+
+  <div class="checkin-banner" id="checkinBanner"></div>
+
+  <div class="searchbar">
+    <div class="search-input-row">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><circle cx="11" cy="11" r="7" stroke="currentColor" stroke-width="2"/><line x1="21" y1="21" x2="16.65" y2="16.65" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+      <input id="search" type="text" placeholder="What's running through your mind — fear, anger, hope..." autocomplete="off">
+    </div>
+    <div class="filters" id="filters">
+      <button class="filter-pill active" data-el="all">All 28</button>
+      <button class="filter-pill" data-el="root">Ground the Body</button>
+      <button class="filter-pill" data-el="sacral">Feel the Truth</button>
+      <button class="filter-pill" data-el="heart">Lead with Love</button>
+    </div>
+  </div>
+
+  <div class="result-count" id="resultCount"></div>
+  <div id="sections"></div>
+  <div class="empty" id="emptyState" style="display:none;">Nothing matches that search — try another word.</div>
+
+  <div class="journal" id="journal">
+    <div class="journal-head" id="journalToggle">
+      <h2>Foundation Journal</h2>
+      <span class="journal-count" id="journalCount"></span>
+    </div>
+    <div class="journal-body">
+      <div class="journal-body-inner" id="journalBody"></div>
+    </div>
+  </div>
+
+  <footer>
+    <p>Every feeling that visits you is trying to bring you home to yourself.
+    Notice the lie. Exchange it for truth. Return to the foundation
+    you were always built on.</p>
+    <div class="footer-tagline"><span>Ground the Body</span> &nbsp;\u2022&nbsp; <span>Feel the Truth</span> &nbsp;\u2022&nbsp; <span>Lead with Love</span></div>
+    <p class="footer-note">Scripture references draw on the standard Old and New Testament alongside
+    books from the broader Ethiopian Orthodox Tewahedo canon (Enoch, Jubilees, Sirach, Wisdom of
+    Solomon, Tobit, Baruch). Wording here is paraphrased for teaching use — verify exact translation
+    in your own copy before quoting it publicly.</p>
+  </footer>
+</div>
+
+<script>
+const SECTION_INFO = {
+  root:{title:"Ground the Body", tag:"Root", sub:"Safety and survival — where the lie first takes root, and where truth has to land first."},
+  sacral:{title:"Feel the Truth", tag:"Sacral", sub:"The body's widest emotional range. Feel it honestly, then let what God says speak louder than the spiral."},
+  heart:{title:"Lead with Love", tag:"Heart", sub:"Connection and expansion — once the body is safe and the mind has made the exchange."}
+};
+
+const DATA = [
+  // ROOT — Ground the Body
+  {name:"Fear", center:"root", one:"Something is at stake.",
+   signal:"Fear points to a perceived threat to safety, security, or something you value — real or anticipated. In right proportion, it sharpens focus and prompts preparation.",
+   lie:"\u201cI am afraid, and it's not safe to move forward.\u201d",
+   scriptureRef:"2 Timothy 1:7", canon:"Standard",
+   truth:"\u201cGod hath not given us the spirit of fear, but of power, and of love, and of a sound mind.\u201d",
+   foundation:"Ground into your body — feet, breath, the room around you. Ask if this threat is real, and is it now. Let the truth outweigh the alarm before fear decides anything for you."},
+
+  {name:"Anxiety", center:"root", one:"My mind is trying to control an unknown future.",
+   signal:"Anxiety is fear stretched across time — it points to uncertainty about outcomes you can't yet control. A small amount sharpens preparation.",
+   lie:"\u201cI can't stop thinking about what might go wrong.\u201d",
+   scriptureRef:"Philippians 4:6\u20137", canon:"Standard",
+   truth:"Be careful for nothing, but in every thing by prayer let your requests be made known — and the peace of God shall keep your heart and mind.",
+   foundation:"Bring your body back to today. Anxiety weakens the instant it's asked to deal only with what's true right now."},
+
+  {name:"Overwhelm", center:"root", one:"There's more here than I can hold at once.",
+   signal:"Overwhelm signals your load has exceeded your current capacity, or too many things are demanding attention at once. It's meant to trigger prioritizing and asking for help.",
+   lie:"\u201cI can't handle this. It's too much.\u201d",
+   scriptureRef:"Matthew 11:28", canon:"Standard",
+   truth:"\u201cCome unto me, all ye that labour and are heavy laden, and I will give you rest.\u201d",
+   foundation:"Come back into your body before your task list. Pick one single next action and let the rest wait."},
+
+  {name:"Insecurity", center:"root", one:"I'm not sure I measure up here.",
+   signal:"Insecurity points to an area where your sense of worth is resting on shaky or external ground. It can prompt honest self-assessment.",
+   lie:"\u201cI'm not enough.\u201d",
+   scriptureRef:"Psalm 139:14", canon:"Standard",
+   truth:"\u201cI am fearfully and wonderfully made: marvellous are thy works.\u201d",
+   foundation:"Ask where your worth is actually resting. It was never up for a vote — you were made on purpose, with purpose."},
+
+  {name:"Shame", center:"root", one:"\u201cI did wrong\u201d becomes \u201cI am wrong.\u201d",
+   signal:"Shame in its raw form points to a value you violated — meant to be brief and corrective. It should prompt repair, then release, unlike guilt which lingers on the act itself.",
+   lie:"\u201cI am bad. I am the mistake.\u201d",
+   scriptureRef:"Jubilees 1", canon:"Ethiopian canon",
+   truth:"Jubilees describes God promising to shape a new, cleansed spirit within His people and call them His own children again — identity restored, not condemned.",
+   foundation:"Translate it back to behavior, not being: \u201cI did X,\u201d not \u201cI am X.\u201d Your foundation was never the shame — it's underneath it, waiting."},
+
+  {name:"Numbness", center:"root", one:"I've had to shut the door to feel safe.",
+   signal:"Numbness is protective — it points to overwhelm so large the system muted itself to survive it. Short-term, it's a legitimate circuit breaker.",
+   lie:"\u201cI don't feel anything anymore, and maybe that's just me now.\u201d",
+   scriptureRef:"Wisdom of Solomon 3:1\u20133", canon:"Ethiopian canon",
+   truth:"\u201cThe souls of the righteous are in the hand of God\u201d — held and kept even in seasons that feel like nothing at all.",
+   foundation:"Come back gently, in small doses, in safety — a breath, a sensation, a moment at a time."},
+
+  {name:"Boredom", center:"root", one:"This isn't using enough of me.",
+   signal:"Boredom signals a mismatch between your capacity and your current engagement. It's meant to point you toward growth, challenge, or meaning.",
+   lie:"\u201cNothing satisfies me. I'm always restless.\u201d",
+   scriptureRef:"Ecclesiastes 3:1", canon:"Standard",
+   truth:"\u201cTo every thing there is a season, and a time to every purpose under the heaven.\u201d",
+   foundation:"Ask what boredom is actually asking for — more challenge, more meaning, or more rest. This season has a purpose too."},
+
+  {name:"Guilt", center:"root", one:"I did something that violated my own values.",
+   signal:"Guilt is the appropriate signal that your actions and your values are out of alignment. It's meant to produce repair, then lift.",
+   lie:"\u201cI don't deserve to let this go.\u201d",
+   scriptureRef:"Tobit 4", canon:"Ethiopian canon",
+   truth:"Tobit counsels his son to walk in truth and generosity all his days, trusting that a righteous life quietly covers over past wrongdoing.",
+   foundation:"Ask what repair is actually owed. Make it, receive forgiveness, including your own, and set the weight back down."},
+
+  // SACRAL — Feel the Truth
+  {name:"Anger", center:"sacral", one:"A boundary was crossed.",
+   signal:"Anger signals that a boundary, value, or sense of fairness has been violated — it's a messenger, not a verdict. Used rightly, it fuels the courage to correct what's wrong.",
+   lie:"\u201cI am an angry person. This is just who I am.\u201d",
+   scriptureRef:"Ephesians 4:26", canon:"Standard",
+   truth:"\u201cBe ye angry, and sin not\u201d — let the sun go down without it ruling the night.",
+   foundation:"Name what boundary was actually crossed before you respond. Let the anger inform the correction, then let it move back through you."},
+
+  {name:"Frustration", center:"sacral", one:"The path isn't working.",
+   signal:"Frustration is information that your current strategy or effort isn't producing the result you expected. It's meant to prompt a change in approach, not identity.",
+   lie:"\u201cNothing ever works out for me.\u201d",
+   scriptureRef:"Galatians 6:9", canon:"Standard",
+   truth:"\u201cLet us not be weary in well doing: for in due season we shall reap.\u201d",
+   foundation:"Ask what this frustration wants you to change — the plan, the pace, or the expectation. Adjust one, release the rest."},
+
+  {name:"Irritability", center:"sacral", one:"Your capacity is low.",
+   signal:"Irritability usually isn't about the small thing in front of you — it's a signal your reserves are depleted. It's an early warning system before real anger arrives.",
+   lie:"\u201cI'm just a short-tempered person.\u201d",
+   scriptureRef:"Galatians 5:22\u201323", canon:"Standard",
+   truth:"Patience and self-control are named among the fruit that grows naturally when a person is led by the Spirit rather than reacting from the flesh.",
+   foundation:"Treat irritability as a check-engine light, not a character trait. What you need most may simply be rest."},
+
+  {name:"Resentment", center:"sacral", one:"Something was unspoken, then repeated.",
+   signal:"Resentment is anger that never got voiced — it points to a boundary you didn't state and a need you didn't ask for. It exists to eventually be spoken.",
+   lie:"\u201cI always give more than I get.\u201d",
+   scriptureRef:"Hebrews 12:15", canon:"Standard",
+   truth:"\u201cLest any root of bitterness springing up trouble you\u201d — and through it, many others.",
+   foundation:"Find the original unspoken sentence underneath it and say it out loud, even late, before the root goes deeper."},
+
+  {name:"Bitterness", center:"sacral", one:"A wound never got closed.",
+   signal:"Bitterness is grief and anger fused over time — it points to an old injury that was never grieved or forgiven. In its early form it's protective.",
+   lie:"\u201cPeople always let me down.\u201d",
+   scriptureRef:"Ephesians 4:31\u201332", canon:"Standard",
+   truth:"Paul's instruction is to put away bitterness, wrath, and anger entirely, replacing them with kindness and a forgiving heart.",
+   foundation:"Bitterness dissolves through grieving the original loss, not more analysis of who was right. Grieve it, then let it go."},
+
+  {name:"Jealousy", center:"sacral", one:"Something I value feels at risk.",
+   signal:"Jealousy speaks to a fear of loss in a relationship or role that matters to you — it's about protection, not possession. It can prompt honest conversation about security.",
+   lie:"\u201cI have to guard what's mine or I'll lose it.\u201d",
+   scriptureRef:"1 Corinthians 13:4", canon:"Standard",
+   truth:"Real love \u201csuffereth long, and is kind... envieth not\u201d — it doesn't need to grip what it loves.",
+   foundation:"Ask what you're actually afraid of losing, and take that fear to the relationship directly instead of to control."},
+
+  {name:"Envy", center:"sacral", one:"I want what that represents.",
+   signal:"Envy points to a desire or value you haven't yet claimed for yourself — a signpost aimed at the wrong target. Redirected, it becomes a map for your own next move.",
+   lie:"\u201cI'll always be less than.\u201d",
+   scriptureRef:"Proverbs 14:30", canon:"Standard",
+   truth:"\u201cA sound heart is the life of the flesh: but envy the rottenness of the bones.\u201d",
+   foundation:"Ask what their life has that yours wants. Then go build it instead of resenting it."},
+
+  {name:"Sadness", center:"sacral", one:"Something mattered and is gone or lacking.",
+   signal:"Sadness marks loss or unmet longing — the heart registering that something of value is missing. It slows you down enough to feel value and invites comfort.",
+   lie:"\u201cI am sad. This is just how I am now.\u201d",
+   scriptureRef:"Sirach 30:22\u201323", canon:"Ethiopian canon",
+   truth:"Sirach teaches that gladness of heart is life to a person, while sorrow carried too long dries up the very bones — comfort your own heart.",
+   foundation:"Let it move — cry, speak it, sit with it — rather than suppressing it or setting up residence inside it."},
+
+  {name:"Grief", center:"sacral", one:"Love has nowhere to go right now.",
+   signal:"Grief is love that lost its object — information that something or someone mattered deeply. Its purpose is to honor what was lost and slowly reroute that love.",
+   lie:"\u201cI am broken by this loss, permanently.\u201d",
+   scriptureRef:"Matthew 5:4", canon:"Standard",
+   truth:"\u201cBlessed are they that mourn: for they shall be comforted.\u201d",
+   foundation:"Grief needs ritual and witness, not solutions. Say what was lost out loud to someone, and let comfort return in its own time."},
+
+  {name:"Loneliness", center:"sacral", one:"I need connection I don't have.",
+   signal:"Loneliness signals an unmet need for connection or being known — even in a room full of people. It's meant to move you toward vulnerability and reach.",
+   lie:"\u201cI am unlovable. No one understands me.\u201d",
+   scriptureRef:"Psalm 68:6", canon:"Standard",
+   truth:"\u201cGod setteth the solitary in families\u201d — belonging is His idea before it's your ache.",
+   foundation:"Loneliness is solved by one honest reach, not many surface ones. Choose one person and let them in past the surface."},
+
+  {name:"Rejection", center:"sacral", one:"I wasn't chosen, and it hurts.",
+   signal:"The sting of rejection points to how much you value belonging and being chosen — proof you care, not proof you're unworthy. It can clarify true fit.",
+   lie:"\u201cI am unwanted.\u201d",
+   scriptureRef:"Psalm 27:10", canon:"Standard",
+   truth:"\u201cWhen my father and my mother forsake me, then the LORD will take me up.\u201d",
+   foundation:"Separate the event from the verdict. One closed door is data about that door, not about your worth."},
+
+  {name:"Confusion", center:"sacral", one:"I don't have enough clarity yet to decide.",
+   signal:"Confusion is honest information that you're missing data, alignment, or time — not a flaw. It's an invitation to gather more or sit in patience.",
+   lie:"\u201cI never know what I want.\u201d",
+   scriptureRef:"1 Corinthians 14:33", canon:"Standard",
+   truth:"\u201cGod is not the author of confusion, but of peace.\u201d",
+   foundation:"Ask what one piece of information or one conversation would resolve this. Go get it instead of spinning."},
+
+  {name:"Doubt", center:"sacral", one:"Is this actually true or trustworthy?",
+   signal:"Doubt tests the strength of a belief, a decision, or a relationship — a stress test, not a betrayal. Healthy doubt refines faith by pressure-testing it.",
+   lie:"\u201cI can't trust anything, including myself.\u201d",
+   scriptureRef:"James 1:6", canon:"Standard",
+   truth:"James urges asking in faith without wavering — a doubting mind, he says, is unstable in everything it touches.",
+   foundation:"Bring doubt to the light and examine it, rather than letting it quietly erode belief in the dark."},
+
+  // HEART — Lead with Love
+  {name:"Joy", center:"heart", one:"This is good, right now.",
+   signal:"Joy is recognition of goodness in the present — a signal that something is aligned and worth savoring. It's meant to be received and shared, not performed.",
+   lie:"\u201cI always have to be the happy one.\u201d",
+   scriptureRef:"Nehemiah 8:10", canon:"Standard",
+   truth:"\u201cThe joy of the LORD is your strength.\u201d",
+   foundation:"Let joy be simple. Receive it without needing to justify or perform it."},
+
+  {name:"Love", center:"heart", one:"This matters to me and I choose it.",
+   signal:"Love is information about deep value and connection — a signal of what and who you're oriented toward. It's meant to move outward as commitment and care.",
+   lie:"\u201cI am who I love. I disappear into them.\u201d",
+   scriptureRef:"1 John 4:18", canon:"Standard",
+   truth:"\u201cThere is no fear in love; but perfect love casteth out fear.\u201d",
+   foundation:"Love well by staying whole. Let love add to your foundation, not replace it."},
+
+  {name:"Peace", center:"heart", one:"I am not at war with this moment.",
+   signal:"Peace signals alignment — between your values and your actions, or your circumstances and your acceptance of them. It's the fruit of a renewed mind, not the absence of feeling.",
+   lie:"\u201cI don't do conflict, so I'll just avoid it.\u201d",
+   scriptureRef:"John 14:27", canon:"Standard",
+   truth:"\u201cPeace I leave with you, my peace I give unto you: not as the world giveth, give I unto you.\u201d",
+   foundation:"Test your peace: is it alignment, or avoidance wearing peace's clothes? Real peace can face conflict without losing itself."},
+
+  {name:"Hope", center:"heart", one:"Good is still possible.",
+   signal:"Hope is forward-facing trust that things can be different or better — it keeps you oriented toward possibility and fuels perseverance.",
+   lie:"\u201cIf I look at what's really happening, it'll ruin the hope.\u201d",
+   scriptureRef:"Baruch 4:27\u201329", canon:"Ethiopian canon",
+   truth:"Baruch tells God's scattered children to take courage — the One who allowed the wandering will bring them home again if they turn and seek Him.",
+   foundation:"Let hope coexist with honesty about what's true right now. Real hope can look at reality and still turn back toward God."},
+
+  {name:"Gratitude", center:"heart", one:"I have received something of value.",
+   signal:"Gratitude registers what's already good or provided — it reorients attention from lack to sufficiency. It's meant to be spoken and shared.",
+   lie:"\u201cI always have to be grateful, even when it hurts.\u201d",
+   scriptureRef:"1 Thessalonians 5:18", canon:"Standard",
+   truth:"\u201cIn every thing give thanks: for this is the will of God.\u201d",
+   foundation:"Let gratitude and grief coexist when they need to. Giving thanks isn't pretending — it's noticing what's still true."},
+
+  {name:"Trust", center:"heart", one:"I'm willing to rely on this.",
+   signal:"Trust is a signal about the reliability of a person, a process, or God — built or broken by evidence over time. It's meant to grow through consistency.",
+   lie:"\u201cI can't trust anyone, or I have to trust everyone completely.\u201d",
+   scriptureRef:"Proverbs 3:5\u20136", canon:"Standard",
+   truth:"\u201cTrust in the LORD with all thine heart; and lean not unto thine own understanding.\u201d",
+   foundation:"Extend trust in proportion to evidence, and revisit it as new evidence comes in. Trust is a practice, not a leap taken once."},
+
+  {name:"Excitement / Anticipation", center:"heart", one:"Something good may be ahead.",
+   signal:"Excitement is energy gathering around a future possibility — the body preparing for something meaningful. It fuels motivation and forward movement.",
+   lie:"\u201cI need the next new thing to feel alive.\u201d",
+   scriptureRef:"1 Enoch", canon:"Ethiopian canon",
+   truth:"Enoch's visions speak of a hope reserved for the faithful — light, peace, and inheritance appointed for those who stay steady while they wait.",
+   foundation:"Let excitement start things, but let commitment finish them. What's appointed will come in its time."}
+];
+
+const CENTER_ORDER = ["root","sacral","heart"];
+const STORAGE_KEY = "tuneintoorigin_foundation_checkins";
+
+function escapeHtml(s){return s.replace(/[&<>]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]));}
+function highlight(text, query){
+  if(!query) return escapeHtml(text);
+  const escaped = escapeHtml(text);
+  const q = query.replace(/[.*+?^${}()|[\]\\]/g,'\\$&');
+  return escaped.replace(new RegExp(q,'ig'), m => `<mark>${m}</mark>`);
+}
+function matches(item, query){
+  if(!query) return true;
+  const q = query.toLowerCase();
+  const haystack = [item.name, item.one, item.signal, item.lie, item.truth, item.foundation].join(' ').toLowerCase();
+  return haystack.includes(q);
+}
+
+function loadCheckins(){
+  try{ const raw = localStorage.getItem(STORAGE_KEY); return raw ? JSON.parse(raw) : []; }
+  catch(e){ return []; }
+}
+function saveCheckins(list){ try{ localStorage.setItem(STORAGE_KEY, JSON.stringify(list)); }catch(e){} }
+function addCheckin(name, center, note){
+  const list = loadCheckins();
+  list.unshift({name, center, note: note || "", date: new Date().toISOString()});
+  saveCheckins(list);
+  renderCheckinBanner();
+  renderJournal();
+}
+function deleteCheckin(idx){
+  const list = loadCheckins();
+  list.splice(idx,1);
+  saveCheckins(list);
+  renderCheckinBanner();
+  renderJournal();
+}
+function fmtDate(iso){
+  const d = new Date(iso);
+  return d.toLocaleDateString(undefined,{month:'short',day:'numeric'}) + ' \u00b7 ' +
+         d.toLocaleTimeString(undefined,{hour:'numeric',minute:'2-digit'});
+}
+
+function renderCheckinBanner(){
+  const list = loadCheckins();
+  const el = document.getElementById('checkinBanner');
+  if(list.length === 0){
+    el.innerHTML = `
+      <div class="cb-label">Foundation Check-In</div>
+      <div class="cb-main">What's running through your mind right now?</div>
+      <div class="cb-sub">Find it below, see the lie it's telling you, and exchange it for truth.</div>
+    `;
+    return;
+  }
+  const last = list[0];
+  el.innerHTML = `
+    <div class="cb-label">Last Check-In</div>
+    <div class="cb-main">You were sitting with <strong>${escapeHtml(last.name)}</strong></div>
+    <div class="cb-sub">${fmtDate(last.date)}${last.note ? ' — "' + escapeHtml(last.note) + '"' : ''}</div>
+  `;
+}
+
+let activeFilter = 'all';
+
+function render(){
+  const query = document.getElementById('search').value.trim();
+  const sectionsEl = document.getElementById('sections');
+  const emptyEl = document.getElementById('emptyState');
+  sectionsEl.innerHTML = '';
+  let totalShown = 0;
+
+  CENTER_ORDER.forEach(c => {
+    if(activeFilter !== 'all' && activeFilter !== c) return;
+    const items = DATA.filter(d => d.center === c && matches(d, query));
+    if(items.length === 0) return;
+    totalShown += items.length;
+
+    const info = SECTION_INFO[c];
+    const section = document.createElement('div');
+    section.className = `section ${c}`;
+    section.innerHTML = `
+      <div class="section-head">
+        <h2>${info.title}</h2>
+        <span class="section-tag">${info.tag}</span>
+      </div>
+      <p class="section-sub">${info.sub}</p>
+    `;
+
+    items.forEach(item => {
+      const card = document.createElement('div');
+      card.className = `card ${c}`;
+      card.innerHTML = `
+        <div class="card-head" data-toggle>
+          <span class="card-dot"></span>
+          <div class="card-title-wrap">
+            <p class="card-name">${highlight(item.name, query)}</p>
+            <p class="card-one">${highlight(item.one, query)}</p>
+          </div>
+          <svg class="chev" width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        <div class="card-body">
+          <div class="card-body-inner">
+            <div class="field">
+              <div class="field-label">What it's communicating</div>
+              <div class="field-text">${highlight(item.signal, query)}</div>
+            </div>
+            <div class="swap">
+              <div class="swap-lie">
+                <div class="field-label">The Lie</div>
+                <div class="field-text">${highlight(item.lie, query)}</div>
+              </div>
+              <div class="swap-arrow">\u2193 exchange for truth \u2193</div>
+              <div class="swap-truth">
+                <div class="field-label">${escapeHtml(item.scriptureRef)} <span class="canon-tag">${escapeHtml(item.canon)}</span></div>
+                <div class="field-text">${highlight(item.truth, query)}</div>
+              </div>
+            </div>
+            <div class="field foundation">
+              <div class="field-label">Returning to foundation</div>
+              <div class="field-text">${highlight(item.foundation, query)}</div>
+            </div>
+            <div class="card-actions">
+              <button class="mark-btn" data-mark="${escapeHtml(item.name)}" data-center="${item.center}">Log this moment</button>
+              <input class="note-input" type="text" placeholder="Optional note..." data-note-for="${escapeHtml(item.name)}">
+            </div>
+          </div>
+        </div>
+      `;
+      card.querySelector('[data-toggle]').addEventListener('click', () => card.classList.toggle('open'));
+      const markBtn = card.querySelector('[data-mark]');
+      markBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const noteInput = card.querySelector('[data-note-for]');
+        addCheckin(item.name, item.center, noteInput.value.trim());
+        markBtn.textContent = 'Logged \u2713';
+        markBtn.classList.add('marked');
+        setTimeout(() => { markBtn.textContent = 'Log this moment'; markBtn.classList.remove('marked'); }, 1800);
+        noteInput.value = '';
+      });
+      card.querySelector('.note-input').addEventListener('click', e => e.stopPropagation());
+      section.appendChild(card);
+    });
+
+    sectionsEl.appendChild(section);
+  });
+
+  document.getElementById('resultCount').textContent =
+    query ? `${totalShown} feeling${totalShown === 1 ? '' : 's'} match \u201c${query}\u201d` : '';
+  emptyEl.style.display = totalShown === 0 ? 'block' : 'none';
+}
+
+function renderJournal(){
+  const list = loadCheckins();
+  document.getElementById('journalCount').textContent = list.length ? `${list.length} entr${list.length===1?'y':'ies'}` : '';
+  const body = document.getElementById('journalBody');
+  if(list.length === 0){
+    body.innerHTML = `<p class="journal-empty">Nothing logged yet. Log a moment above when you notice something running you.</p>`;
+    return;
+  }
+  body.innerHTML = list.map((item, idx) => `
+    <div class="journal-entry">
+      <span class="je-dot ${item.center}"></span>
+      <div class="je-body">
+        <div class="je-name">${escapeHtml(item.name)}</div>
+        ${item.note ? `<div class="je-note">"${escapeHtml(item.note)}"</div>` : ''}
+        <div class="je-date">${fmtDate(item.date)}</div>
+      </div>
+      <button class="je-delete" data-del="${idx}" aria-label="Delete entry">&times;</button>
+    </div>
+  `).join('') + `<button class="journal-clear" id="clearJournal">Clear all entries</button>`;
+
+  body.querySelectorAll('[data-del]').forEach(btn => btn.addEventListener('click', () => deleteCheckin(parseInt(btn.dataset.del,10))));
+  const clearBtn = document.getElementById('clearJournal');
+  if(clearBtn) clearBtn.addEventListener('click', () => { saveCheckins([]); renderCheckinBanner(); renderJournal(); });
+}
+
+document.getElementById('search').addEventListener('input', render);
+document.getElementById('filters').addEventListener('click', (e) => {
+  const btn = e.target.closest('.filter-pill');
+  if(!btn) return;
+  document.querySelectorAll('.filter-pill').forEach(p => p.classList.remove('active'));
+  btn.classList.add('active');
+  activeFilter = btn.dataset.el;
+  render();
+});
+document.getElementById('journalToggle').addEventListener('click', () => document.getElementById('journal').classList.toggle('open'));
+
+render();
+renderCheckinBanner();
+renderJournal();
+
+if('serviceWorker' in navigator){
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('sw.js').catch(() => {});
+  });
+}
+</script>
+</body>
+</html>
